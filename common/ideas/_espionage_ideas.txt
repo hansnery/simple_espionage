@@ -49,10 +49,10 @@ ideas = {
 				occupation_cost = 0.50
 			}
 		}
-	
+		
 		research_sabotaged = {
 			
-			picture = research_sabotaged
+			picture = idea_research_sabotaged
 
 			allowed = {
 				always = no
