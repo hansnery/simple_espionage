@@ -1,0 +1,986 @@
+scripted_gui = {
+	
+	spy_missions = {
+	
+		context_type = player_context
+		
+		window_name = "spy_enemy_country_container"
+		
+		visible = {
+			# FROM = {
+				# NOT = { tag = ROOT }
+			# }
+			ROOT = {
+				check_variable = { show_spy_missions > 0 }
+			}
+		}
+		
+		effects = {
+			
+			###########################################################################
+			## 								MISSIONS								 ##
+			###########################################################################
+			
+			spy_spread_dissent_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 20
+						}
+						subtract_from_variable = {
+							var = propaganda@PREV
+							value = 20
+						}
+					}
+				}
+				country_event = { id = spy.1 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_fund_pacifists_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 10
+						}
+						subtract_from_variable = {
+							var = opposition@PREV
+							value = 30
+						}
+					}
+				}
+				country_event = { id = spy.11 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_fund_opposition_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 20
+						}
+						subtract_from_variable = {
+							var = opposition@PREV
+							value = 40
+						}
+					}
+				}
+				country_event = { id = spy.15 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_tarnish_reputation_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 10
+						}
+						subtract_from_variable = {
+							var = propaganda@PREV
+							value = 50
+						}
+					}
+				}
+				country_event = { id = spy.19 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_military_sabotage_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 40
+						}
+						subtract_from_variable = {
+							var = intel@PREV
+							value = 60
+						}
+					}
+				}
+				country_event = { id = spy.23 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_sabotage_research_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 40
+						}
+						subtract_from_variable = {
+							var = intel@PREV
+							value = 40
+						}
+					}
+				}
+				country_event = { id = spy.27 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_steal_technology_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 30
+						}
+						subtract_from_variable = {
+							var = intel@PREV
+							value = 50
+						}
+					}
+				}
+				country_event = { id = spy.31 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_arm_rebels_click = {
+				var:espionage_target = {
+					ROOT = {
+						subtract_from_variable = {
+							var = spy_network@PREV
+							value = 30
+						}
+						subtract_from_variable = {
+							var = opposition@PREV
+							value = 30
+						}
+					}
+				}
+				country_event = { id = spy.36 }
+				set_country_flag = ongoing_mission
+			}
+			
+			spy_kill_spy_click = {
+				if = {
+					limit = {
+						is_ai = yes
+						var:espionage_target = {
+							NOT = {
+								tag = ROOT
+							}
+						}
+					}
+					subtract_from_variable = {
+						var = counterintelligence
+						value = 30
+					}
+					country_event = { id = spy.40 }
+					set_country_flag = ongoing_mission
+					else = {
+						set_temp_variable = { show3 = 1 }
+						subtract_from_temp_variable = { show3 = show_spy_enemies_list }
+						set_variable = { show_spy_enemies_list = show3 }
+					}
+				}
+			}
+			
+			###########################################################################
+			## 							    OPERATIONS 								 ##
+			###########################################################################
+			
+			close_spy_operations_click = {
+				set_temp_variable = { show = 1 }
+				subtract_from_temp_variable = { show = show_spy_missions }
+				set_variable = { show_spy_missions = show }
+				# set_variable = { espionage_button_frame = 1 }
+				var:espionage_target = {
+					if = {
+						limit = {
+							ROOT = {
+								check_variable = { assigned_spies_on_target_slot_1@PREV = 0 }
+								check_variable = { assigned_spies_on_target_slot_2@PREV = 0 }
+								check_variable = { assigned_spies_on_target_slot_3@PREV = 0 }
+								check_variable = { assigned_spies_on_target_slot_4@PREV = 0 }
+							}
+						}
+						ROOT = { clr_country_flag = spied_country@PREV }
+					}
+				}
+			}
+			
+			add_spy_slot_1_button_click = {
+				var:espionage_target = {
+					add_to_variable = { enemy_spies = 1 }
+					add_to_variable = { infiltrated_spies_from_@PREV = 1 }
+					if = {
+						limit = {
+							NOT = {
+								is_in_array = {
+									array = THIS.spy_enemies
+									value = ROOT
+								}
+							}
+						}
+						add_to_array = { THIS.spy_enemies = ROOT }
+					}
+					ROOT = {
+						add_to_variable = { spies_abroad = 1 }
+						add_to_variable = { assigned_spies_on_target_slot_1@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_1 = assigned_spies_on_target_slot_1@PREV }
+						set_country_flag = spied_country@PREV
+					}
+				}
+				subtract_from_variable = {
+					var = spy
+					value = 1
+				}
+				subtract_from_variable = {
+					var = spy_max
+					value = 1
+				}
+			}
+			
+			add_spy_slot_2_button_click = {
+				var:espionage_target = {
+					add_to_variable = { enemy_spies = 1 }
+					add_to_variable = { infiltrated_spies_from_@PREV = 1 }
+					if = {
+						limit = {
+							NOT = {
+								is_in_array = {
+									array = THIS.spy_enemies
+									value = ROOT
+								}
+							}
+						}
+						add_to_array = { THIS.spy_enemies = ROOT }
+					}
+					ROOT = {
+						add_to_variable = { spies_abroad = 1 }
+						add_to_variable = { assigned_spies_on_target_slot_2@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_2 = assigned_spies_on_target_slot_2@PREV }
+						set_country_flag = spied_country@PREV
+					}
+				}
+				subtract_from_variable = {
+					var = spy
+					value = 1
+				}
+				subtract_from_variable = {
+					var = spy_max
+					value = 1
+				}
+			}
+			
+			add_spy_slot_3_button_click = {
+				var:espionage_target = {
+					add_to_variable = { enemy_spies = 1 }
+					add_to_variable = { infiltrated_spies_from_@PREV = 1 }
+					if = {
+						limit = {
+							NOT = {
+								is_in_array = {
+									array = THIS.spy_enemies
+									value = ROOT
+								}
+							}
+						}
+						add_to_array = { THIS.spy_enemies = ROOT }
+					}
+					ROOT = {
+						add_to_variable = { spies_abroad = 1 }
+						add_to_variable = { assigned_spies_on_target_slot_3@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_3 = assigned_spies_on_target_slot_3@PREV }
+						set_country_flag = spied_country@PREV
+					}
+				}
+				subtract_from_variable = {
+					var = spy
+					value = 1
+				}
+				subtract_from_variable = {
+					var = spy_max
+					value = 1
+				}
+			}
+			
+			add_spy_slot_4_button_click = {
+				var:espionage_target = {
+					add_to_variable = { enemy_spies = 1 }
+					add_to_variable = { infiltrated_spies_from_@PREV = 1 }
+					if = {
+						limit = {
+							NOT = {
+								is_in_array = {
+									array = THIS.spy_enemies
+									value = ROOT
+								}
+							}
+						}
+						add_to_array = { THIS.spy_enemies = ROOT }
+					}
+					ROOT = {
+						add_to_variable = { spies_abroad = 1 }
+						add_to_variable = { assigned_spies_on_target_slot_4@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_4 = assigned_spies_on_target_slot_4@PREV }
+						set_country_flag = spied_country@PREV
+					}
+				}
+				subtract_from_variable = {
+					var = spy
+					value = 1
+				}
+				subtract_from_variable = {
+					var = spy_max
+					value = 1
+				}
+			}
+			
+			add_spy_slot_5_button_click = {
+				# Counterintelligence Spies are Global
+				add_to_variable = { spies_abroad = 1 }
+				add_to_variable = { assigned_spies_on_target_slot_5 = 1 }
+				subtract_from_variable = {
+					var = spy
+					value = 1
+				}
+				subtract_from_variable = {
+					var = spy_max
+					value = 1
+				}
+			}
+			
+			#################################################################################################################
+			
+			subtract_spy_slot_1_button_click = {
+				var:espionage_target = {
+					subtract_from_variable = { enemy_spies = 1 }
+					subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+					ROOT = {
+						subtract_from_variable = { spies_abroad = 1 }
+						subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_1 = assigned_spies_on_target_slot_1@PREV }
+					}
+				}
+				add_to_variable = {
+					var = spy
+					value = 1
+				}
+				add_to_variable = {
+					var = spy_max
+					value = 1
+				}
+				if = {
+					limit = {
+						THIS = {
+							check_variable = { infiltrated_spies_from_@PREV < 1 }
+						}
+						is_in_array = {
+							array = PREV.spy_enemies
+							value = THIS
+						}
+					}
+					remove_from_array = { THIS.spy_enemies = PREV }
+				}
+			}
+			
+			subtract_spy_slot_2_button_click = {
+				var:espionage_target = {
+					subtract_from_variable = { enemy_spies = 1 }
+					subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+					ROOT = {
+						subtract_from_variable = { spies_abroad = 1 }
+						subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_2 = assigned_spies_on_target_slot_2@PREV }
+					}
+				}
+				add_to_variable = {
+					var = spy
+					value = 1
+				}
+				add_to_variable = {
+					var = spy_max
+					value = 1
+				}
+				if = {
+					limit = {
+						THIS = {
+							check_variable = { infiltrated_spies_from_@PREV < 1 }
+						}
+						is_in_array = {
+							array = PREV.spy_enemies
+							value = THIS
+						}
+					}
+					remove_from_array = { THIS.spy_enemies = PREV }
+				}
+			}
+			
+			subtract_spy_slot_3_button_click = {
+				var:espionage_target = {
+					subtract_from_variable = { enemy_spies = 1 }
+					subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+					ROOT = {
+						subtract_from_variable = { spies_abroad = 1 }
+						subtract_from_variable = { assigned_spies_on_target_slot_3@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_3 = assigned_spies_on_target_slot_3@PREV }
+					}
+				}
+				add_to_variable = {
+					var = spy
+					value = 1
+				}
+				add_to_variable = {
+					var = spy_max
+					value = 1
+				}
+				if = {
+					limit = {
+						THIS = {
+							check_variable = { infiltrated_spies_from_@PREV < 1 }
+						}
+						is_in_array = {
+							array = PREV.spy_enemies
+							value = THIS
+						}
+					}
+					remove_from_array = { THIS.spy_enemies = PREV }
+				}
+			}
+			
+			subtract_spy_slot_4_button_click = {
+				var:espionage_target = {
+					subtract_from_variable = { enemy_spies = 1 }
+					subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+					ROOT = {
+						subtract_from_variable = { spies_abroad = 1 }
+						subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 }
+						set_variable = { assigned_spies_on_target_slot_4 = assigned_spies_on_target_slot_4@PREV }
+					}
+				}
+				add_to_variable = {
+					var = spy
+					value = 1
+				}
+				add_to_variable = {
+					var = spy_max
+					value = 1
+				}
+				if = {
+					limit = {
+						THIS = {
+							check_variable = { infiltrated_spies_from_@PREV < 1 }
+						}
+						is_in_array = {
+							array = PREV.spy_enemies
+							value = THIS
+						}
+					}
+					remove_from_array = { THIS.spy_enemies = PREV }
+				}
+			}
+			
+			subtract_spy_slot_5_button_click = {
+				# Counterintelligence Spies are Global
+				subtract_from_variable = { spies_abroad = 1 }
+				subtract_from_variable = { assigned_spies_on_target_slot_5 = 1 }
+				add_to_variable = {
+					var = spy
+					value = 1
+				}
+				add_to_variable = {
+					var = spy_max
+					value = 1
+				}
+			}
+		}
+		
+		triggers = {
+			
+			spy_spread_dissent_click_enabled = {
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					NOT = {	has_idea = spread_dissent }
+					ROOT = {	
+						NOT = { has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_spread_dissent_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 20
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = propaganda@PREV 
+							value = 20
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_fund_pacifists_click_enabled = {
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					has_war = yes
+					has_war_support > 0.02
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_fund_pacifists_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 10
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = opposition@PREV 
+							value = 30
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_fund_opposition_click_enabled = {
+				var:espionage_target = {
+					NOT = { 
+						tag = ROOT 
+						has_idea = fund_opposition
+					}
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_fund_opposition_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 20
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = opposition@PREV 
+							value = 40
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_tarnish_reputation_click_enabled = {
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_tarnish_reputation_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 10
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = propaganda@PREV 
+							value = 50
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_military_sabotage_click_enabled = {
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_military_sabotage_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 40
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = intel@PREV 
+							value = 60
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_sabotage_research_click_enabled = {
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					NOT = {	has_idea = research_sabotaged }
+					ROOT = {						
+						NOT = {	has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_sabotage_research_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 40
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = intel@PREV 
+							value = 40
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_steal_technology_click_enabled = {
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_steal_technology_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 30
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = intel@PREV 
+							value = 50
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_arm_rebels_click_enabled = {
+				var:espionage_target = {
+					has_war = yes
+					NOT = { tag = ROOT }
+					NOT = {	has_idea = rebels_funded }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						NOT = { has_country_flag = recent_arm_rebels_mission }
+						check_variable = { 
+							var = spy_network@PREV 
+							value = 30
+							compare = greater_than_or_equals
+						}
+						check_variable = { 
+							var = opposition@PREV 
+							value = 30
+							compare = greater_than_or_equals
+						}
+					}
+				}
+			}
+			
+			spy_kill_spy_click_enabled = {
+				OR = {
+					AND = {
+						is_ai = yes
+						var:espionage_target = {
+							ROOT = {
+								check_variable = { infiltrated_spies_from_@PREV > 0 }
+								NOT = { has_country_flag = ongoing_mission }
+								check_variable = { 
+									var = counterintelligence
+									value = 30
+									compare = greater_than_or_equals
+								}
+							}
+						}
+					}
+					AND = {
+						is_ai = no
+						check_variable = { enemy_spies > 0 }
+					}
+				}
+			}
+			
+			add_spy_slot_1_button_click_enabled = {
+				has_spy = yes
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_1@PREV 
+							value = 10
+							compare = less_than
+						}
+					}
+				}
+			}
+			
+			add_spy_slot_2_button_click_enabled = {
+				has_spy = yes
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_2@PREV 
+							value = 10
+							compare = less_than
+						}
+					}
+				}
+			}
+			
+			add_spy_slot_3_button_click_enabled = {
+				has_spy = yes
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_3@PREV 
+							value = 10
+							compare = less_than
+						}
+					}
+				}
+			}
+			
+			add_spy_slot_4_button_click_enabled = {
+				has_spy = yes
+				var:espionage_target = {
+					NOT = { tag = ROOT }
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_4@PREV 
+							value = 10
+							compare = less_than
+						}
+					}
+				}
+			}
+			
+			add_spy_slot_5_button_click_enabled = {
+				has_spy = yes
+				NOT = { has_country_flag = ongoing_mission }
+				check_variable = { 
+					var = assigned_spies_on_target_slot_5
+					value = 10
+					compare = less_than
+				}
+			}
+			
+			subtract_spy_slot_1_button_click_enabled = {
+				var:espionage_target = {
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_1@PREV 
+							value = 0
+							compare = greater_than
+						}
+					}
+				}
+			}
+			
+			subtract_spy_slot_2_button_click_enabled = {
+				var:espionage_target = {
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_2@PREV 
+							value = 0
+							compare = greater_than
+						}
+					}
+				}
+			}
+			
+			subtract_spy_slot_3_button_click_enabled = {
+				var:espionage_target = {
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_3@PREV 
+							value = 0
+							compare = greater_than
+						}
+					}
+				}
+			}
+			
+			subtract_spy_slot_4_button_click_enabled = {
+				var:espionage_target = {
+					ROOT = {
+						NOT = { has_country_flag = ongoing_mission }
+						check_variable = { 
+							var = assigned_spies_on_target_slot_4@PREV 
+							value = 0
+							compare = greater_than
+						}
+					}
+				}
+			}
+			
+			subtract_spy_slot_5_button_click_enabled = {
+				NOT = { has_country_flag = ongoing_mission }
+				check_variable = { 
+					var = assigned_spies_on_target_slot_5
+					value = 0
+					compare = greater_than
+				}
+			}
+		}
+		
+		# If you want AI to check different scripted GUIs at same interval and compare ai_will_do with each other as well, you can make on of them parent of each other.
+		# If you define a parent, you shouldn't define ai_test_interval, ai_test_variance and ai_max_weight_taken_per_test in child AIs since it will share parent's.
+		# ai_test_parent = "espionage"
+		
+		# First check - most important for performance
+		ai_enabled = {
+			always = yes
+		}
+		
+		# Interval in hours for AI to check
+		ai_test_interval = 24
+		ai_test_variance = 0.2
+		
+		# If you want AI to be able to click multiple stuff on same tick you can use
+		ai_max_weight_taken_per_test = 4
+		
+		# Targets
+		# ai_test_scopes = test_self_country
+        
+		# Do action if this is true
+		ai_check = {
+			always = yes
+		}
+		
+		# Target Trigger - Final check
+		ai_check_scope = {
+			var:espionage_target = {
+				check_variable = { ROOT.opinion@this < 0 }
+			}
+		}
+		
+		# Weights for buttons
+		ai_weights = {
+			close_spy_operations_click = {
+				weight = 1.0
+				ai_will_do = {
+					factor = -1
+					modifier = {
+						has_spy = no
+						add = 100
+					}
+				}
+			}
+			add_spy_slot_1_button_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					factor = 1
+					# modifier = {
+						# check_variable = { ai_random > 0.7 }
+						# add = 2
+					# }
+				}
+			}
+			add_spy_slot_2_button_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					factor = 1
+					# modifier = {
+						# check_variable = { ai_random > 0.7 }
+						# add = 2
+					# }
+				}
+			}
+			add_spy_slot_3_button_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					factor = 1
+					# modifier = {
+						# check_variable = { ai_random > 0.7 }
+						# add = 2
+					# }
+				}
+			}
+			add_spy_slot_4_button_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					factor = 1
+					# modifier = {
+						# check_variable = { ai_random > 0.7 }
+						# add = 2
+					# }
+				}
+			}
+			add_spy_slot_5_button_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					factor = 1
+					# modifier = {
+						# check_variable = { ai_random > 0.7 }
+						# add = 2
+					# }
+				}
+			}
+			#
+			spy_spread_dissent_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_fund_pacifists_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_fund_opposition_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_tarnish_reputation_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_military_sabotage_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_sabotage_research_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_steal_technology_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_arm_rebels_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+			spy_kill_spy_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+				}
+			}
+		}
+	}
+}
+

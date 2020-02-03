@@ -1,0 +1,140 @@
+scripted_gui = {
+    spy_enemies = {
+    
+        context_type = player_context
+		
+		window_name = "spy_enemies_window"
+		
+		visible = {
+            ROOT = {
+				check_variable = { show_spy_enemies_list > 0 }
+			}
+		}
+		
+		# dynamic lists are used for populating grid boxes
+		dynamic_lists = {
+			spy_enemies_country_grid = {
+				array = ROOT.spy_enemies
+				change_scope = yes
+				entry_container = spy_enemies_country_entry
+			}
+		}
+		
+		effects = {
+			kill_spy_click = {
+				ROOT = {
+					subtract_from_variable = {
+						var = counterintelligence
+						value = 30
+					}
+					set_variable = { espionage_target = PREV.id }
+					country_event = { id = spy.40 }
+					set_country_flag = ongoing_mission
+				}
+			}
+			button_close_click = {
+				ROOT = {
+					set_variable = { show_spy_enemies_list = 0 }
+				}
+			}
+		}
+		
+		triggers = {
+			kill_spy_click_enabled = {
+				ROOT = {
+					check_variable = { infiltrated_spies_from_@PREV > 0 }
+					NOT = { has_country_flag = ongoing_mission }
+					check_variable = { 
+						var = counterintelligence
+						value = 30
+						compare = greater_than_or_equals
+					}
+				}
+			}
+		}
+		
+		 properties = {
+            flag = {
+                image = "[This.GetFlag]"
+            }
+		}
+		
+		# If you want AI to check different scripted GUIs at same interval and compare ai_will_do with each other as well, you can make on of them parent of each other.
+		# If you define a parent, you shouldn't define ai_test_interval, ai_test_variance and ai_max_weight_taken_per_test in child AIs since it will share parent's.
+		# ai_test_parent = "spy_missions"
+		
+		# First check - most important for performance
+		ai_enabled = {
+			always = yes
+		}
+		
+		# Interval in hours for AI to check
+		ai_test_interval = 24
+		ai_test_variance = 0.2
+		
+		# If you want AI to be able to click multiple stuff on same tick you can use
+		ai_max_weight_taken_per_test = 4
+		
+		# Targets
+		# ai_test_scopes = test_self_country
+        
+		# Do action if this is true
+		ai_check = {
+			ROOT = {
+				check_variable = { 
+					var = counterintelligence
+					value = 30
+					compare = greater_than_or_equals
+				}
+			}
+		}
+		
+		# Target Trigger - Final check
+		# ai_check_scope = {
+			# always = yes
+		# }
+		
+		# Weights for buttons
+		ai_weights = {
+			kill_spy_click = {
+				weight = 1 # weight is 1, this means that this click will consume one of 3 ai_max_weight_taken_per_test
+				
+				ai_will_do = {
+					base = 1
+					
+					modifier = {
+						factor = 1
+						
+						ROOT = {
+							check_variable = { 
+								var = counterintelligence
+								value = 30
+								compare = greater_than_or_equals
+							}
+						}
+					}
+				}
+			}
+			button_close_click = {
+				weight = 1.0
+				
+				ai_will_do = {
+					base = 1
+					
+					modifier = {
+						factor = 0
+						
+						ROOT = {
+							check_variable = { 
+								var = counterintelligence
+								value = 30
+								compare = greater_than_or_equals
+							}
+						}
+					}
+				}
+			}
+		}
+    }
+}
+

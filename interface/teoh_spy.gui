@@ -1,0 +1,754 @@
+guiTypes = {
+	
+	# Number of Spies on the Topbar
+	containerWindowType = {
+		name = "spy_container"
+		position = { x = 1088 y = 6 }
+		
+		iconType ={
+			name ="spy_bg"
+			spriteType = "GFX_generic_box_smallest"
+			position = { x=0 y=0 }
+		}
+		
+		iconType = {
+			name ="spy_icon"
+			spriteType = "GFX_spy_icon"
+			position = { x= 7 y = 5 }
+		}
+		
+		instantTextBoxType = {
+			name ="spy_text"
+			position = { x= 20 y = 3 }
+			font = "hoi_18mbs"
+			text = "SPY_TOPBAR"
+			format = center
+			maxWidth = 46
+			maxHeight = 24
+			fixedsize = yes
+			
+			pdx_tooltip = "SPY_TOOLTIP"
+			pdx_tooltip_delayed = "SPY_TOOLTIP_DELAYED"
+		}
+	}
+	
+	# Send Spy Button on the Diplomatic Screen
+	containerWindowType = {
+		name = "espionage_container"
+		position = { x = 5%% y = 101%%}
+		clipping = no
+		
+		buttonType ={
+			name ="espionage_button"
+			quadTextureSprite ="GFX_spy_entry_bg"
+			position = { x=2 y=-66 }
+			clicksound = click_action
+			Orientation = "UPPER_LEFT"
+			pdx_tooltip = "[Root.GetOngoingMissionTrigger]"
+		}
+
+		instantTextBoxType = {
+			name ="espionage"
+			position = { x= 195	 y = -54 }
+			font = "hoi_24header"
+			text = "Espionage"
+			maxWidth = 190
+			maxHeight = 20
+			fixedsize = yes
+			format = left
+			allwaystransparent = yes
+		}
+	}
+	
+	# Operations Window
+	containerWindowType = {
+		name = "spy_enemy_country_container"
+		# position = { x=800 y=0}
+		# show_position = { x=800 y =-800 }
+		# show_animation_type = decelerated
+		# hide_animation_type = accelerated
+		# animation_time = 300
+		# orientation = lower_left
+		# size = { width=436 height=496 }
+		position = {x=800 y=250}
+		size = { width=600 height=500 }
+
+		fade_time = 300
+		fade_type = linear
+		moveable = yes
+		
+		background = {
+			name = "Background"		
+			spriteType ="GFX_send_spy_bg"
+		}
+
+		instantTextboxType = {
+			name = "title"
+			position = {x=128 y=27}
+			font = "hoi_24header"
+			text = "Operations in [?var:espionage_target.GetNameDef]"
+			maxWidth = 260
+			maxHeight = 23
+			fixedsize = yes
+			format = center
+		}
+		
+		instantTextboxType = {
+			name = "desc"
+			position = {x=30 y=85}
+			font = "hoi_18mbs"
+			text = "We can send spies to perform various operations in the enemy country and wreak havoc behind their lines."
+			maxWidth = 300
+			maxHeight = 23
+			format = center
+		}
+		
+		#################
+		#  SPY NETWORK  #
+		#################
+		
+		iconType = {
+			name ="slot_1_spy_box"
+			spriteType = "GFX_genric_mini_bg1"
+			position = { x= 18 y = 180 }
+		}
+		
+		iconType = {
+			name ="slot_1_spy_icon"
+			spriteType = "GFX_spy_icon"
+			position = {x=40 y=185}
+			pdx_tooltip = "SPYNETWORK_TOOLTIP"
+			pdx_tooltip_delayed = "SPYNETWORK_TOOLTIP_DELAYED"
+		}
+		
+		# Assigned Spies on Slot 1
+		instantTextboxType = {
+			name = "slot_1_spy_value"
+			position = {x=19 y=182}
+			font = "hoi_18mbs"
+			text = "[?assigned_spies_on_target_slot_1|.0]"
+			maxWidth = 23
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "SPYNETWORK_TOOLTIP"
+			pdx_tooltip_delayed = "SPYNETWORK_TOOLTIP_DELAYED"
+		}
+		
+		buttonType = {
+			name = "add_spy_slot_1_button" 
+			position = {x=150 y=168}
+			font = "hoi_30header"
+			spriteType = "GFX_add_one"			#GFX_cool_green_button
+		}
+		
+		buttonType = {
+			name = "subtract_spy_slot_1_button" 
+			position = {x=150 y=192}
+			font = "hoi_30header"
+			spriteType = "GFX_subtract_one"			#GFX_cool_green_button
+		}
+		
+		iconType = {
+			name ="spy_network_box"
+			spriteType = "GFX_division_icon_bg"		#GFX_tiled_decisions_bg_small
+			position = { x= 53 y = 170 }
+			pdx_tooltip = "SPYNETWORK_TOOLTIP"
+			pdx_tooltip_delayed = "SPYNETWORK_TOOLTIP_DELAYED"
+		}
+		
+		iconType = {
+			name ="spy_network_icon"
+			spriteType = "GFX_spy_action_icons"
+			frame = 1
+			position = { x= 58 y = 175 }
+			pdx_tooltip = "SPYNETWORK_TOOLTIP"
+			pdx_tooltip_delayed = "SPYNETWORK_TOOLTIP_DELAYED"
+		}
+		
+		instantTextboxType = {
+			name = "spy_network_text"
+			position = {x=40 y=145}
+			font = "hoi_24header"
+			text = "Spy Network"
+			maxWidth = 130
+			maxHeight = 23
+			format = left
+		}
+		
+		# Spy Network Value
+		instantTextboxType = {
+			name = "spy_network_value"
+			position = {x=95 y=180 }
+			font = "hoi_24header"
+			text = "[?spy_network|.0]%"
+			maxWidth = 46
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "SPYNETWORK_TOOLTIP"
+			pdx_tooltip_delayed = "SPYNETWORK_TOOLTIP_DELAYED"
+		}
+		
+		#################
+		#  OPPOSITION   #
+		#################
+		
+		iconType = {
+			name ="slot_2_spy_box"
+			spriteType = "GFX_genric_mini_bg1"
+			position = { x= 180 y = 180 }
+		}
+		
+		iconType = {
+			name ="slot_2_spy_icon"
+			spriteType = "GFX_spy_icon"
+			position = {x=202 y=185}
+			pdx_tooltip = "OPPOSITION_TOOLTIP"
+			pdx_tooltip_delayed = "OPPOSITION_TOOLTIP_DELAYED"
+		}
+		
+		# Assigned Spies on Slot 2
+		instantTextboxType = {
+			name = "slot_2_spy_value"
+			position = {x=181 y=182}
+			font = "hoi_18mbs"
+			text = "[?assigned_spies_on_target_slot_2|.0]"
+			maxWidth = 23
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "OPPOSITION_TOOLTIP"
+			pdx_tooltip_delayed = "OPPOSITION_TOOLTIP_DELAYED"
+		}
+		
+		buttonType = {
+			name = "add_spy_slot_2_button" 
+			position = {x=312 y=168}
+			font = "hoi_30header"
+			spriteType = "GFX_add_one"			#GFX_cool_green_button
+		}
+		
+		buttonType = {
+			name = "subtract_spy_slot_2_button" 
+			position = {x=312 y=192}
+			font = "hoi_30header"
+			spriteType = "GFX_subtract_one"			#GFX_cool_green_button
+		}
+		
+		iconType = {
+			name ="domestic_box"
+			spriteType = "GFX_division_icon_bg"	#GFX_tiled_decisions_bg_small
+			position = { x= 215 y = 170 }
+			pdx_tooltip = "OPPOSITION_TOOLTIP"
+			pdx_tooltip_delayed = "OPPOSITION_TOOLTIP_DELAYED"
+		}
+		
+		iconType = {
+			name ="domestic_icon"
+			spriteType = "GFX_spy_action_icons"
+			frame = 3
+			position = { x= 221 y = 175 }
+			pdx_tooltip = "OPPOSITION_TOOLTIP"
+			pdx_tooltip_delayed = "OPPOSITION_TOOLTIP_DELAYED"
+		}
+		
+		instantTextboxType = {
+			name = "domestic_text"
+			position = {x=208 y=145}
+			font = "hoi_24header"
+			text = "Opposition"
+			maxWidth = 300
+			maxHeight = 23
+			format = left
+		}
+		
+		# Opposition Value
+		instantTextboxType = {
+			name = "opposition_value"
+			position = {x=257 y=180 }
+			font = "hoi_24header"
+			text = "[?opposition|.0]%"
+			maxWidth = 46
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "OPPOSITION_TOOLTIP"
+			pdx_tooltip_delayed = "OPPOSITION_TOOLTIP_DELAYED"
+		}
+		
+		#################
+		#  PROPAGANDA   #
+		#################
+		
+		iconType = {
+			name ="slot_3_spy_box"
+			spriteType = "GFX_genric_mini_bg1"
+			position = { x= 18 y = 250 }
+		}
+		
+		iconType = {
+			name ="slot_3_spy_icon"
+			spriteType = "GFX_spy_icon"
+			position = {x=40 y=255}
+			pdx_tooltip = "PROPAGANDA_TOOLTIP"
+			pdx_tooltip_delayed = "PROPAGANDA_TOOLTIP_DELAYED"
+		}
+		
+		# Assigned Spies on Slot 3
+		instantTextboxType = {
+			name = "slot_3_spy_value"
+			position = {x=19 y=252}
+			font = "hoi_18mbs"
+			text = "[?assigned_spies_on_target_slot_3|.0]"
+			maxWidth = 23
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "PROPAGANDA_TOOLTIP"
+			pdx_tooltip_delayed = "PROPAGANDA_TOOLTIP_DELAYED"
+		}
+		
+		buttonType = {
+			name = "add_spy_slot_3_button" 
+			position = {x=150 y=238}
+			font = "hoi_30header"
+			spriteType = "GFX_add_one"			#GFX_cool_green_button
+		}
+		
+		buttonType = {
+			name = "subtract_spy_slot_3_button" 
+			position = {x=150 y=263}
+			font = "hoi_30header"
+			spriteType = "GFX_subtract_one"			#GFX_cool_green_button
+		}
+		
+		iconType = {
+			name ="another_box"
+			spriteType = "GFX_division_icon_bg"	#GFX_tiled_decisions_bg_small
+			position = { x= 53 y = 240 }
+			pdx_tooltip = "PROPAGANDA_TOOLTIP"
+			pdx_tooltip_delayed = "PROPAGANDA_TOOLTIP_DELAYED"
+		}
+		
+		iconType = {
+			name ="another_icon"
+			spriteType = "GFX_spy_action_icons"
+			frame = 2
+			position = { x= 58 y = 245 }
+			pdx_tooltip = "PROPAGANDA_TOOLTIP"
+			pdx_tooltip_delayed = "PROPAGANDA_TOOLTIP_DELAYED"
+		}
+		
+		instantTextboxType = {
+			name = "another_text"
+			position = {x=45 y=215}
+			font = "hoi_24header"
+			text = "Propaganda"
+			maxWidth = 300
+			maxHeight = 23
+			format = left
+		}
+		
+		# Propaganda Value
+		instantTextboxType = {
+			name = "another_value"
+			position = {x=95 y=250 }
+			font = "hoi_24header"
+			text = "[?propaganda|.0]%"
+			maxWidth = 46
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "PROPAGANDA_TOOLTIP"
+			pdx_tooltip_delayed = "PROPAGANDA_TOOLTIP_DELAYED"
+		}
+		
+		#################
+		#     INTEL     #
+		#################
+		
+		iconType = {
+			name ="slot_4_spy_box"
+			spriteType = "GFX_genric_mini_bg1"
+			position = { x= 180 y = 250 }
+		}
+		
+		iconType = {
+			name ="slot_4_spy_icon"
+			spriteType = "GFX_spy_icon"
+			position = {x=202 y=255}
+			pdx_tooltip = "INTEL_TOOLTIP"
+			pdx_tooltip_delayed = "INTEL_TOOLTIP_DELAYED"
+		}
+		
+		# Assigned Spies on Slot 4
+		instantTextboxType = {
+			name = "slot_4_spy_value"
+			position = {x=181 y=252}
+			font = "hoi_18mbs"
+			text = "[?assigned_spies_on_target_slot_4|.0]"
+			maxWidth = 23
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "INTEL_TOOLTIP"
+			pdx_tooltip_delayed = "INTEL_TOOLTIP_DELAYED"
+		}
+		
+		buttonType = {
+			name = "add_spy_slot_4_button" 
+			position = {x=312 y=238}
+			font = "hoi_30header"
+			spriteType = "GFX_add_one"			#GFX_cool_green_button
+		}
+		
+		buttonType = {
+			name = "subtract_spy_slot_4_button" 
+			position = {x=312 y=263}
+			font = "hoi_30header"
+			spriteType = "GFX_subtract_one"			#GFX_cool_green_button
+		}
+		
+		iconType = {
+			name ="yet_another_box"
+			spriteType = "GFX_division_icon_bg"	#GFX_tiled_decisions_bg_small
+			position = { x= 215 y = 240 }
+			pdx_tooltip = "INTEL_TOOLTIP"
+			pdx_tooltip_delayed = "INTEL_TOOLTIP_DELAYED"
+		}
+		
+		iconType = {
+			name ="yet_another_icon"
+			spriteType = "GFX_spy_action_icons"
+			frame = 4
+			position = { x= 221 y = 245 }
+			pdx_tooltip = "INTEL_TOOLTIP"
+			pdx_tooltip_delayed = "INTEL_TOOLTIP_DELAYED"
+		}
+		
+		instantTextboxType = {
+			name = "yet_another_text"
+			position = {x=235 y=215}
+			font = "hoi_24header"
+			text = "Intel"
+			maxWidth = 300
+			maxHeight = 23
+			format = left
+		}
+		
+		# Intel Value
+		instantTextboxType = {
+			name = "yet_another_value"
+			position = {x=257 y=250 }
+			font = "hoi_24header"
+			text = "[?intel|.0]%"
+			maxWidth = 46
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "INTEL_TOOLTIP"
+			pdx_tooltip_delayed = "INTEL_TOOLTIP_DELAYED"
+		}
+		
+		#######################
+		# COUNTERINTELLIGENCE #
+		#######################
+		
+		iconType = {
+			name ="slot_5_spy_box"
+			spriteType = "GFX_genric_mini_bg1"
+			position = { x= 100 y = 325 }
+		}
+		
+		iconType = {
+			name ="slot_5_spy_icon"
+			spriteType = "GFX_spy_icon"
+			position = {x=122 y=330}
+		}
+		
+		# Assigned Spies on Slot 5
+		instantTextboxType = {
+			name = "slot_5_spy_value"
+			position = {x=101 y=327}
+			font = "hoi_18mbs"
+			text = "[?assigned_spies_on_target_slot_5|.0]"
+			maxWidth = 23
+			maxHeight = 23
+			format = center
+		}
+		
+		buttonType = {
+			name = "add_spy_slot_5_button" 
+			position = {x=233 y=312}
+			font = "hoi_30header"
+			spriteType = "GFX_add_one"			#GFX_cool_green_button
+		}
+		
+		buttonType = {
+			name = "subtract_spy_slot_5_button" 
+			position = {x=233 y=337}
+			font = "hoi_30header"
+			spriteType = "GFX_subtract_one"			#GFX_cool_green_button
+		}
+		
+		iconType = {
+			name ="yet_even_another_box"
+			spriteType = "GFX_division_icon_bg"	#GFX_tiled_decisions_bg_small
+			position = { x= 135 y = 315 }
+			pdx_tooltip = "COUNTERINTELLIGENCE_TOOLTIP"
+			pdx_tooltip_delayed = "COUNTERINTELLIGENCE_TOOLTIP_DELAYED"
+		}
+		
+		iconType = {
+			name ="yet_even_another_icon"
+			spriteType = "GFX_counterintelligence_icon"
+			# frame = 4
+			position = {x=140 y=320}
+			pdx_tooltip = "COUNTERINTELLIGENCE_TOOLTIP"
+			pdx_tooltip_delayed = "COUNTERINTELLIGENCE_TOOLTIP_DELAYED"
+		}
+		
+		instantTextboxType = {
+			name = "yet_even_another_text"
+			position = {x=77 y=290}
+			font = "hoi_24header"
+			text = "Counterintelligence"
+			maxWidth = 300
+			maxHeight = 23
+			format = left
+			# pdx_tooltip = "COUNTERINTELLIGENCE_TOOLTIP"
+			# pdx_tooltip_delayed = "COUNTERINTELLIGENCE_TOOLTIP_DELAYED"
+		}
+		
+		# Counterintelligence Value
+		instantTextboxType = {
+			name = "yet_even_another_value"
+			position = {x=175 y=324}
+			font = "hoi_24header"
+			text = "[?counterintelligence|.0]%"
+			maxWidth = 46
+			maxHeight = 23
+			format = center
+			pdx_tooltip = "COUNTERINTELLIGENCE_TOOLTIP"
+			pdx_tooltip_delayed = "COUNTERINTELLIGENCE_TOOLTIP_DELAYED"
+		}
+		
+		######################################################
+		
+		# Close Button
+		buttonType = {
+			name = "close_spy_operations"
+			position = { x = 200 y = -125 }
+			shortcut = "ESCAPE"
+			quadTextureSprite ="GFX_button_123x34"
+			buttonFont = "hoi_16mbs"
+			Orientation = "LOWER_LEFT"
+			buttonText = "DIPLOMACY_CLOSE"
+			pdx_tooltip = "DIPLOMACY_CLOSE"
+			clicksound = click_close
+		}
+		
+		# buttonType = {
+			# name = "send_spy_button" 
+			# position = {x=34 y=330}
+			# font = "hoi_30header"
+			# text = "Send Spy"
+			# spriteType = "GFX_main_lobby_button"			#GFX_cool_green_button
+		# }
+		
+		#################
+		#	MISSIONS	#
+		#################
+		buttonType = {
+			name = "spy_spread_dissent"
+			position = {x=343 y=99}	
+			font = "hoi_18mbs"
+			text = "Spread Dissent"
+			spriteType = "GFX_sort_button_171x35"
+			pdx_tooltip = "SPY_SPREAD_DISSENT"
+		}
+		buttonType = {
+			name = "spy_fund_pacifists" 
+			position = {x=343 y=129}	
+			font = "hoi_18mbs"
+			text = "Fund Pacifists"
+			spriteType = "GFX_sort_button_171x35"
+			pdx_tooltip = "SPY_FUND_PACIFISTS"
+		}
+		buttonType = {
+			name = "spy_fund_opposition" 
+			position = {x=343 y=159}	
+			font = "hoi_18mbs"
+			text = "Fund Opposition"
+			spriteType = "GFX_sort_button_171x35"	#sort_button_171x35
+			pdx_tooltip = "SPY_FUND_OPPOSITION"
+		}
+		buttonType = {
+			name = "spy_arm_rebels" 
+			position = {x=343 y=189}
+			font = "hoi_18mbs"
+			text = "Arm Rebels"
+			spriteType = "GFX_sort_button_171x35"
+			pdx_tooltip = "SPY_ARM_REBELS"
+		}
+		buttonType = {
+			name = "spy_tarnish_reputation" 
+			position = {x=343 y=219}	
+			font = "hoi_18mbs"
+			text = "Tarnish Reputation"
+			spriteType = "GFX_sort_button_171x35"
+			pdx_tooltip = "SPY_TARNISH_REPUTATION"
+		}
+		buttonType = {
+			name = "spy_sabotage_research" 
+			position = {x=343 y=249}	
+			font = "hoi_18mbs"
+			text = "Sabotage Research"
+			spriteType = "GFX_sort_button_171x35"
+			pdx_tooltip = "SPY_SABOTAGE_RESEARCH"
+		}
+		buttonType = {
+			name = "spy_steal_technology" 
+			position = {x=343 y=279}	
+			font = "hoi_18mbs"
+			text = "Steal Technology"
+			spriteType = "GFX_sort_button_171x35"
+			pdx_tooltip = "SPY_STEAL_TECHNOLOGY"
+		}
+		buttonType = {
+			name = "spy_military_sabotage" 
+			position = {x=343 y=309}	
+			font = "hoi_18mbs"
+			text = "Military Sabotage"
+			spriteType = "GFX_sort_button_171x35"
+			pdx_tooltip = "SPY_SABOTAGE_INDUSTRY"
+		}
+		buttonType = {
+			name = "spy_kill_spy" 
+			position = {x=343 y=339}	
+			font = "hoi_18mbs"
+			text = "Counterintelligence"
+			spriteType = "GFX_sort_button_171x35"
+			# pdx_tooltip = "SPY_KILL_SPY"
+		}
+	}
+	
+	containerWindowType = {
+		name = "spy_enemies_window"
+		position = { x = -250 y = -250 }	
+		size = { width = 515 height = 410 }
+		fade_time = 300
+		fade_type = linear
+		moveable = yes
+		show_sound = menu_open_window
+		click_to_front = yes
+        
+		orientation = center
+        
+		background = {
+			name = "Background"		
+			quadTextureSprite = "GFX_send_spy_bg"
+		}
+        
+		instantTextboxType = {
+			name = "title"
+			position = { x = 65 y = 32 }
+			font = "hoi_18mbs"
+			borderSize = {x = 0 y = 0}
+			text = "Infiltrated Enemy Agents"
+			maxWidth = 400
+			maxHeight = 20
+			format = center
+		}
+		
+		containerWindowType = {
+			name = "spy_enemies_country_grid_container"
+			position = {x = 20 y = 80}
+			size = {width = 500 height = 280 } 
+            margin = { top = 10 bottom = 10 }
+			Orientation = upper_left
+
+			verticalScrollbar = "right_vertical_slider"
+
+			background = {
+				name = "Background"
+				quadTextureSprite = "GFX_tiled_window_1b_thin_border"
+			}
+			
+			gridboxtype = {
+				name = "spy_enemies_country_grid"
+				position = { x = -124 y = 0 }
+				size = { width = 500 height = 100%% }
+				slotsize = { width = 230 height = 80 }
+				max_slots_horizontal = 2
+				add_horizontal = yes
+			}
+		}
+		
+		buttonType = {
+			name = "button_close"
+			position = {x = 200 y = 375 }
+			spriteType = "GFX_button_123x34"
+			buttonFont = "hoi_16mbs"
+			buttonText = "CLOSE"
+			clicksound = click_close
+			shortcut = "ESCAPE"
+		}
+    }
+	
+	containerWindowType = {
+		name = "spy_enemies_country_entry"
+		position = { x = 0 y = 0}	
+		size = { width = 230 height = 80 }
+		
+		background = {
+			name = "Background"		
+			quadTextureSprite = "GFX_tiled_plain_bg_small"
+		}
+		
+		instantTextBoxType = {
+			name = "name"
+			position = { x = 70 y = 6 }
+			font = "hoi_16mbs"
+			text = "[?This.GetName]"
+			format = center
+			maxWidth = 100
+			maxHeight = 24
+			fixedsize = yes
+			tooltip = "SCOPE_TEXT"
+		}
+		
+		iconType = {
+			name ="bg_spy_icon"
+			spriteType = "GFX_countryview_government_in_exile_bg"
+			position = { x= 68 y = 25 }
+			scale = 0.8
+		}
+		
+		iconType = {
+			name ="enemy_spy_icon"
+			spriteType = "GFX_decision_category_spy"
+			position = { x= 75 y = 28 }
+			scale = 0.9
+		}
+		
+		instantTextBoxType = {
+			name = "infiltrated_spies"
+			position = { x = 120 y = 27 }
+			font = "hoi_36header"
+			text = "[?Root.infiltrated_spies_from_@This]"
+			format = center
+			maxWidth = 40
+			maxHeight = 24
+			fixedsize = yes
+			tooltip = "SCOPE_TEXT"
+		}
+		
+		buttonType = {
+			name = "flag"
+			quadTextureSprite = "GFX_flag_small2"
+			position = { x = 20 y = 30 }
+			Orientation = "UPPER_LEFT"
+		}
+		
+        buttonType = {
+            name = "kill_spy"
+            position = {x = 180 y = 27 }
+            spriteType = "GFX_sunk_ships_button"
+			tooltip = "SPY_KILL_SPY"
+        }
+	}
+}

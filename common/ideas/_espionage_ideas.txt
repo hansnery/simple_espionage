@@ -1,0 +1,68 @@
+ideas = {
+
+	country = {
+		
+		spread_dissent = {
+			
+			picture = idea_spread_dissent
+
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+			
+			modifier = {
+				stability_weekly = -0.001
+			}
+		}
+		
+		fund_opposition = {
+			
+			picture = idea_fund_opposition
+
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+			
+			modifier = {
+				political_power_factor = -0.1
+			}
+		}
+		
+		rebels_funded = {
+			
+			picture = idea_rebels_funded
+
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+			
+			modifier = {
+				enemy_partisan_effect = 0.50
+				# foreign_subversive_activites = 0.50
+				# subversive_activites_upkeep = 0.50
+				occupation_cost = 0.50
+			}
+		}
+	
+		research_sabotaged = {
+			
+			picture = research_sabotaged
+
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+			
+			modifier = {
+				research_speed_factor = -0.1
+			}
+		}
+	}
+}

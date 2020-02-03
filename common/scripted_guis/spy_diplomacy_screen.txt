@@ -1,0 +1,112 @@
+scripted_gui = {
+	
+	# Espionage Button on the Diplomatic Screen
+	espionage = {
+		context_type = selected_country_context
+
+		parent_window_token = selected_country_view
+		
+		window_name = "espionage_container"
+		
+		visible = {
+			always = yes
+		}
+		
+		triggers = {
+			espionage_button_click_enabled = {
+				ROOT = {
+					custom_trigger_tooltip = {
+						tooltip = ongoing_mission_tt		
+						NOT = { has_country_flag = ongoing_mission }
+					}
+				}
+            }
+		}
+		
+		effects = {
+			espionage_button_click = {
+				ROOT = {
+					set_temp_variable = { show = 1 }
+					subtract_from_temp_variable = { show = show_spy_missions }
+					set_variable = { show_spy_missions = show }
+					set_variable = { espionage_target = PREV.id }
+					# Updates Operations Buttons' Values / Using 'mirror' variables
+					set_variable = { assigned_spies_on_target_slot_1 = assigned_spies_on_target_slot_1@PREV }
+					set_variable = { assigned_spies_on_target_slot_2 = assigned_spies_on_target_slot_2@PREV }
+					set_variable = { assigned_spies_on_target_slot_3 = assigned_spies_on_target_slot_3@PREV }
+					set_variable = { assigned_spies_on_target_slot_4 = assigned_spies_on_target_slot_4@PREV }
+					set_variable = { infiltrated_spies_from_ = infiltrated_spies_from_@PREV }
+					set_country_flag = spied_country@PREV
+				}
+			}
+		}
+		
+		# ai_test_parent = "espionage"
+		
+		# First check - most important for performance
+		ai_enabled = {
+			always = yes
+		}
+		
+		# Interval in hours for AI to check
+		ai_test_interval = 720	# One month in hours
+		ai_test_variance = 0.2
+		
+		# If you want AI to be able to click multiple stuff on same tick you can use
+		ai_max_weight_taken_per_test = 1
+		
+		# Targets
+		# ai_test_scopes = test_self_country
+		ai_test_scopes = test_enemy_countries
+		ai_test_scopes = test_neighbouring_countries
+        
+		# Do action if this is true
+		ai_check = {
+			# check_variable = { ai_random > 0.4 }
+		}
+		
+		# Target Trigger - Final check
+		ai_check_scope = {
+			# check_variable = { ROOT.opinion@this < 0 }
+			NOT = {
+				is_in_faction_with = ROOT
+			}
+			OR = {
+				has_war_with = ROOT
+				ROOT = {
+					tag = GER
+					PREV = {
+						tag = ENG
+					}
+				}
+				ROOT = {
+					tag = ENG
+					PREV = {
+						tag = GER
+					}
+				}
+				any_neighbor_country = {
+					is_enemy_ideology = yes
+				}
+				AND = {
+					is_enemy_ideology = yes
+					is_major = yes
+					ROOT = {
+						is_major = yes	# To avoid a lot of minor spies
+					}
+				}
+			}
+		}
+		
+		# Weights for buttons
+		ai_weights = {
+			espionage_button_click = {
+				weight = 1.0
+				ai_will_do = {
+					factor = 1
+				}
+			}
+		}
+	}
+}
+

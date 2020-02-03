@@ -1,0 +1,24 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_spy_icon"
+		texturefile = "gfx/interface/spy_icon.dds"
+		legacy_lazy_load = no
+	}
+	
+	spriteType = {
+		name = "GFX_send_spy_bg"
+		texturefile = "gfx/interface/send_spy_bg.dds"
+	}
+	
+	spriteType = {
+		name = "GFX_cool_green_button"
+		textureFile = "gfx/interface/button_268_68.dds"
+		noOfFrames = 3
+		effectFile = "gfx/FX/buttonstate_onlydisable.lua"		
+	}
+	
+	spriteType = {
+		name = "GFX_counterintelligence_icon"
+		texturefile = "gfx/interface/counterintelligence_icon.dds"
+	}
+}

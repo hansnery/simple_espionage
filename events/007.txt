@@ -1,0 +1,3646 @@
+﻿###########################
+# Spy Events
+###########################
+
+add_namespace = spy
+
+# Spread Dissent (ROOT)
+country_event = {
+	id = spy.1
+	title = spy.1.t
+	desc = spy.1.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.1.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.2 days = 7 }	# Mission successful (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.3 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.2 days = 7 }	# Mission successful (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.3 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.2 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.3 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.2 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.3 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.2 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.3 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = spread_dissent_mission
+	}
+}
+
+# Spread Dissent Successful
+country_event = {
+	id = spy.2
+	title = spy.2.t
+	desc = spy.2.d
+	picture = GFX_report_event_spread_dissent
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.2.a
+		var:espionage_target = {
+			country_event = { id = spy.4 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_spread_dissent_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = spread_dissent_mission
+	}
+}
+
+# Spread Dissent Failed
+country_event = {
+	id = spy.3
+	title = spy.3.t
+	desc = spy.3.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Spread Dissent Successful (TARGET)
+country_event = {
+	id = spy.4
+	title = spy.4.t
+	desc = spy.4.d
+	picture = GFX_report_event_spread_dissent
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.4.a
+		# add_stability = -0.02
+		add_timed_idea = {
+			idea = spread_dissent
+			days = 180
+		}
+	}
+}
+
+# Spy escapes (ROOT)
+country_event = {
+	id = spy.5
+	title = spy.5.t
+	desc = spy.5.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.5.a
+		clr_country_flag = ongoing_mission
+		clr_country_flag = spread_dissent_mission
+		clr_country_flag = fund_pacifists_mission
+		clr_country_flag = fund_opposition_mission
+		clr_country_flag = tarnish_reputation_mission
+		clr_country_flag = military_sabotage_mission
+		clr_country_flag = sabotage_research_mission
+		clr_country_flag = steal_technology_mission
+		clr_country_flag = arm_rebels_mission
+		clr_country_flag = kill_spy_mission
+	}
+}
+
+# Spy captured (ROOT)
+country_event = {
+	id = spy.6
+	title = spy.6.t
+	desc = spy.6.d
+	picture = GFX_report_event_captured_spy
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.6.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				90 = {
+					country_event = { id = spy.7 }	# Spy dies and reveals master (ROOT)
+				}
+				10 = {
+					country_event = { id = spy.8 }	# Spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				80 = {
+					country_event = { id = spy.7 }	# Spy dies and reveals master (ROOT)
+				}
+				20 = {
+					country_event = { id = spy.8 }	# Spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				70 = {
+					country_event = { id = spy.7 }	# Spy dies and reveals master (ROOT)
+				}
+				30 = {
+					country_event = { id = spy.8 }	# Spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.7 }	# Spy dies and reveals master (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.8 }	# Spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.7 }	# Spy dies and reveals master (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.8 }	# Spy dies (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Our spy confesses (ROOT)
+country_event = {
+	id = spy.7
+	title = spy.7.t
+	desc = spy.7.d
+	picture = GFX_report_event_captured_spy
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			set_variable = { spy_employer = PREV.id }
+		}
+	}
+
+	option = {
+		name = spy.7.a
+		# loses_1_prestige = yes
+		add_to_variable = { spy_max = 1 }
+		subtract_from_variable = { spies_abroad = 1 }
+		hidden_effect = {
+			var:espionage_target = {
+				country_event = { id = spy.9 } # Enemy spy confesses (TARGET)
+			}
+			if = {
+				limit = { 
+					has_country_flag = spread_dissent_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_3 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_3@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = spread_dissent_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = fund_pacifists_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_2 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = fund_pacifists_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = fund_opposition_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_2 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = fund_opposition_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = tarnish_reputation_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_3 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_3@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = tarnish_reputation_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = military_sabotage_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_4 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = military_sabotage_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = sabotage_research_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_4 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = sabotage_research_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = steal_technology_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_4 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = steal_technology_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = arm_rebels_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_2 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = arm_rebels_mission
+			}
+		}
+		clr_country_flag = ongoing_mission
+	}
+}
+
+# Our spy dies (ROOT)
+country_event = {
+	id = spy.8
+	title = spy.8.t
+	desc = spy.8.d
+	picture = GFX_report_event_captured_spy	# GFX_report_event_dead_spy
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.8.a
+		add_to_variable = { spy_max = 1 }
+		subtract_from_variable = { spies_abroad = 1 }
+		hidden_effect = {
+			var:espionage_target = {
+				country_event = { id = spy.10 }
+				# subtract_from_variable = { enemy_spies = 1 }
+				# subtract_from_variable = { infiltrated_spies_from_ = 1 }
+				# subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { 
+					has_country_flag = spread_dissent_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_3 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_3@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = spread_dissent_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = fund_pacifists_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_2 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = fund_pacifists_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = fund_opposition_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_2 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = fund_opposition_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = tarnish_reputation_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_3 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_3@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = tarnish_reputation_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = military_sabotage_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_4 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = military_sabotage_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = sabotage_research_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_4 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = sabotage_research_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = steal_technology_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_4 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = steal_technology_mission
+			}
+			else_if = {
+				limit = { 
+					has_country_flag = arm_rebels_mission
+				}
+				random_list = {
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_1 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+					50 = {
+						var:espionage_target = {
+							ROOT = { 
+								subtract_from_variable = { assigned_spies_on_target_slot_2 = 1 } 
+								subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 } 
+								var:espionage_target = {
+									subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+								}
+							}
+						}
+					}
+				}
+				clr_country_flag = arm_rebels_mission
+			}
+		}
+		clr_country_flag = ongoing_mission
+	}
+}
+
+# Enemy spy confesses (TARGET)
+country_event = {
+	id = spy.9
+	title = spy.9.t
+	desc = spy.9.d
+	picture = GFX_report_event_captured_spy
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.9.a
+		subtract_from_variable = { enemy_spies = 1 }
+		subtract_from_variable = { infiltrated_spies_from_ = 1 }
+		# subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+	}
+}
+
+# Enemy spy dies (TARGET)
+country_event = {
+	id = spy.10
+	title = spy.10.t
+	desc = {
+		text = spy.10.d
+		trigger = { NOT = { has_country_flag = kill_spy_mission } }
+	}
+	desc = {
+		text = spy.10.d_2
+		trigger = { has_country_flag = kill_spy_mission }
+	}
+	picture = GFX_report_event_captured_spy
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.10.a
+		if = {
+			limit = { NOT = { has_country_flag = kill_spy_mission } }
+			subtract_from_variable = { enemy_spies = 1 }
+			subtract_from_variable = { infiltrated_spies_from_ = 1 }
+			# subtract_from_variable = { infiltrated_spies_from_@PREV = 1 }
+		}
+		clr_country_flag = kill_spy_mission
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Fund Pacifists (ROOT)
+country_event = {
+	id = spy.11
+	title = spy.11.t
+	desc = spy.11.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.11.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.12 days = 7 }	# Mission successful (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.13 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.12 days = 7 }	# Mission successful (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.13 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.12 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.13 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.12 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.13 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.12 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.13 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = fund_pacifists_mission
+	}
+}
+
+# Fund Pacifists Successful
+country_event = {
+	id = spy.12
+	title = spy.12.t
+	desc = spy.12.d
+	picture = GFX_report_event_pacifists_2
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.12.a
+		var:espionage_target = {
+			country_event = { id = spy.14 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_fund_pacifists_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = fund_pacifists_mission
+	}
+}
+
+# Fund Pacifists Failed
+country_event = {
+	id = spy.13
+	title = spy.13.t
+	desc = spy.13.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Fund Pacifists Successful (TARGET)
+country_event = {
+	id = spy.14
+	title = spy.14.t
+	desc = spy.14.d
+	picture = GFX_report_event_pacifists_2
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.14.a
+		add_war_support = -0.02
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Fund Opposition (ROOT)
+country_event = {
+	id = spy.15
+	title = spy.15.t
+	desc = spy.15.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.15.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.16 days = 7 }	# Mission successful (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.17 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.16 days = 7 }	# Mission successful (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.17 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.16 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.17 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.16 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.17 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.16 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.17 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = fund_opposition_mission
+	}
+}
+
+# Fund Opposition Successful
+country_event = {
+	id = spy.16
+	title = spy.16.t
+	desc = spy.16.d
+	picture = GFX_report_event_protest
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.16.a
+		var:espionage_target = {
+			country_event = { id = spy.18 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_fund_opposition_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = fund_opposition_mission
+	}
+}
+
+# Fund Opposition Failed
+country_event = {
+	id = spy.17
+	title = spy.17.t
+	desc = spy.17.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Fund Opposition Successful (TARGET)
+country_event = {
+	id = spy.18
+	title = spy.18.t
+	desc = spy.18.d
+	picture = GFX_report_event_protest
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.18.a
+		add_timed_idea = {
+			idea = fund_opposition
+			days = 90
+		}
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Tarnish Reputation (ROOT)
+country_event = {
+	id = spy.19
+	title = spy.19.t
+	desc = spy.19.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.19.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.20 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.21 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.20 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.21 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.20 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.21 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.20 days = 7 }	# Mission successful (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.21 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.20 days = 7 }	# Mission successful (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.21 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = tarnish_reputation_mission
+	}
+}
+
+# Tarnish Reputation Successful
+country_event = {
+	id = spy.20
+	title = spy.20.t
+	desc = spy.20.d
+	picture = GFX_report_event_tarnish_reputation
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.20.a
+		var:espionage_target = {
+			country_event = { id = spy.22 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_tarnish_reputation_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = tarnish_reputation_mission
+	}
+}
+
+# Tarnish Reputation Failed
+country_event = {
+	id = spy.21
+	title = spy.21.t
+	desc = spy.21.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Tarnish Reputation Successful (TARGET)
+country_event = {
+	id = spy.22
+	title = spy.22.t
+	desc = spy.22.d
+	picture = GFX_report_event_tarnish_reputation
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.22.a
+		# loses_1_prestige = yes
+		# damages_reputation = yes
+		
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Military Sabotage (ROOT)
+country_event = {
+	id = spy.23
+	title = spy.23.t
+	desc = spy.23.d
+	picture = GFX_report_event_sabotage_industry
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.23.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.24 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.25 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.24 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.25 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.24 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.25 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.24 days = 7 }	# Mission successful (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.25 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.24 days = 7 }	# Mission successful (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.25 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = military_sabotage_mission
+	}
+}
+
+# Military Sabotage Successful
+country_event = {
+	id = spy.24
+	title = spy.24.t
+	desc = spy.24.d
+	picture = GFX_report_event_military_sabotage
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.24.a
+		var:espionage_target = {
+			country_event = { id = spy.26 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_military_sabotage_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = military_sabotage_mission
+	}
+}
+
+# Military Sabotage Failed
+country_event = {
+	id = spy.25
+	title = spy.25.t
+	desc = spy.25.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Military Sabotage Successful (TARGET)
+country_event = {
+	id = spy.26
+	title = spy.26.t
+	desc = spy.26.d
+	picture = GFX_report_event_military_sabotage
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.26.a
+		if = {
+			limit = { 
+				num_of_military_factories < 10 
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				num_of_military_factories > 9 
+				num_of_military_factories < 20 
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				num_of_military_factories > 19 
+				num_of_military_factories < 40 
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				num_of_military_factories > 39 
+				num_of_military_factories < 80 
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				num_of_military_factories > 79 
+				num_of_military_factories < 160 
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				num_of_military_factories > 159 
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1.0
+				}
+			}
+		}
+		clr_country_flag = military_sabotage_mission
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Sabotage Research (ROOT)
+country_event = {
+	id = spy.27
+	title = spy.27.t
+	desc = spy.27.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.27.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.28 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.29 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.28 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.29 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.28 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.29 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.28 days = 7 }	# Mission successful (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.29 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.28 days = 7 }	# Mission successful (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.29 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = sabotage_research_mission
+	}
+}
+
+# Sabotage Research Successful
+country_event = {
+	id = spy.28
+	title = spy.28.t
+	desc = spy.28.d
+	picture = GFX_report_event_sabotage_research
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.28.a
+		var:espionage_target = {
+			country_event = { id = spy.30 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_sabotage_research_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = sabotage_research_mission
+	}
+}
+
+# Sabotage Research Failed
+country_event = {
+	id = spy.29
+	title = spy.29.t
+	desc = spy.29.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Sabotage Research Successful (TARGET)
+country_event = {
+	id = spy.30
+	title = spy.30.t
+	desc = spy.30.d
+	picture = GFX_report_event_sabotage_research
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.30.a
+		add_timed_idea = {
+			idea = research_sabotaged
+			days = 180
+		}
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Steal Technology (ROOT)
+country_event = {
+	id = spy.31
+	title = spy.31.t
+	desc = spy.31.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.31.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.32 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.33 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.32 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.33 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.32 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.33 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.32 days = 7 }	# Mission successful (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.33 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.32 days = 7 }	# Mission successful (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.33 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = steal_technology_mission
+	}
+}
+
+# Steal Technology Successful
+country_event = {
+	id = spy.32
+	title = spy.32.t
+	desc = spy.32.d
+	picture = GFX_report_event_steal_technology
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.32.a
+		random_list = {
+			25 = {
+				country_event = { id = spy.35 days = 1 }
+				set_country_flag = stolen_infantry_tech
+			}
+			25 = {
+				country_event = { id = spy.35 days = 1 }
+				set_country_flag = stolen_armor_tech
+			}
+			25 = {
+				country_event = { id = spy.35 days = 1 }
+				set_country_flag = stolen_artillery_tech
+			}
+			15 = {
+				country_event = { id = spy.35 days = 1 }
+				set_country_flag = stolen_naval_tech
+			}
+			10 = {
+				country_event = { id = spy.35 days = 1 }
+				set_country_flag = stolen_air_tech
+			}
+		}
+		var:espionage_target = {
+			country_event = { id = spy.34 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_steal_technology_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = steal_technology_mission
+	}
+}
+
+# Steal Technology Failed
+country_event = {
+	id = spy.33
+	title = spy.33.t
+	desc = spy.33.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				35 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				65 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				30 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				70 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Steal Technology Successful (TARGET)
+country_event = {
+	id = spy.34
+	title = spy.34.t
+	desc = spy.34.d
+	picture = GFX_report_event_steal_technology
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.34.a
+	}
+}
+
+# Stolen technology (ROOT)
+country_event = {
+	id = spy.35
+	title = spy.35.t
+	desc = spy.35.d
+	picture = GFX_report_event_steal_technology
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.35.a
+		trigger = { has_country_flag = stolen_infantry_tech }
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 1
+			category = infantry_tech
+		}
+		clr_country_flag = stolen_infantry_tech
+	}
+	option = {
+		name = spy.35.a
+		trigger = { has_country_flag = stolen_armor_tech }
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 1
+			category = armor
+		}
+		clr_country_flag = stolen_armor_tech
+	}
+	option = {
+		name = spy.35.a
+		trigger = { has_country_flag = stolen_artillery_tech }
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 1
+			category = artillery
+		}
+		clr_country_flag = stolen_artillery_tech
+	}
+	option = {
+		name = spy.35.a
+		trigger = { has_country_flag = stolen_naval_tech }
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 1
+			category = naval_equipment
+		}
+		clr_country_flag = stolen_naval_tech
+	}
+	option = {
+		name = spy.35.a
+		trigger = { has_country_flag = stolen_air_tech }
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 1
+			category = air_equipment
+		}
+		clr_country_flag = stolen_air_tech
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Arm Rebels (ROOT)
+country_event = {
+	id = spy.36
+	title = spy.36.t
+	desc = spy.36.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.36.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.37 days = 7 }	# Mission successful (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.38 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.37 days = 7 }	# Mission successful (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.38 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.37 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.38 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.37 days = 7 }	# Mission successful (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.38 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.37 days = 7 }	# Mission successful (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.38 days = 7 }	# Mission failed (ROOT)
+				}
+			}
+		}
+		set_country_flag = arm_rebels_mission
+	}
+}
+
+# Arm Rebels Successful
+country_event = {
+	id = spy.37
+	title = spy.37.t
+	desc = spy.37.d
+	picture = GFX_report_event_arm_rebels_1
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.37.a
+		var:espionage_target = {
+			country_event = { id = spy.39 }	# Mission successful (TARGET)
+		}
+		set_country_flag = { flag = recent_arm_rebels_mission days = 365 }
+		clr_country_flag = ongoing_mission
+		clr_country_flag = arm_rebels_mission
+	}
+}
+
+# Arm Rebels Failed
+country_event = {
+	id = spy.38
+	title = spy.38.t
+	desc = spy.38.d
+	picture = GFX_report_event_spy_ready
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.3.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				55 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				45 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				45 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				55 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				40 = {
+					country_event = { id = spy.5 days = 1 }	# Spy escapes (ROOT)
+				}
+				60 = {
+					country_event = { id = spy.6 days = 1 }	# Spy captured (ROOT)
+				}
+			}
+		}
+	}
+}
+
+# Arm Rebels Successful (TARGET)
+country_event = {
+	id = spy.39
+	title = spy.39.t
+	desc = spy.39.d
+	picture = GFX_report_event_arm_rebels_1
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.39.a
+		add_timed_idea = {
+			idea = rebels_funded
+			days = 180
+		}
+	}
+}
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+# Kill Spy (ROOT)
+country_event = {
+	id = spy.40
+	title = spy.40.t
+	desc = spy.40.d
+	picture = GFX_report_event_kill_spy
+
+	is_triggered_only = yes
+	
+	immediate = {
+		var:espionage_target = {
+			save_event_target_as = espionage_target
+		}
+	}
+
+	option = {
+		name = spy.40.a
+		if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 1 }	# Target has Very Low Intelligence Budget
+				}
+			}
+			random_list = {
+				90 = {
+					country_event = { id = spy.41 days = 7 }	# Mission successful (ROOT)
+				}
+				10 = {
+					country_event = { id = spy.42 days = 7 }	# Our spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 2 }	# Target has Low Intelligence Budget
+				}
+			}
+			random_list = {
+				80 = {
+					country_event = { id = spy.41 days = 7 }	# Mission successful (ROOT)
+				}
+				20 = {
+					country_event = { id = spy.42 days = 7 }	# Our spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 3 }	# Target has Medium Intelligence Budget
+				}
+			}
+			random_list = {
+				70 = {
+					country_event = { id = spy.41 days = 7 }	# Mission successful (ROOT)
+				}
+				30 = {
+					country_event = { id = spy.42 days = 7 }	# Our spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 4 }	# Target has High Intelligence Budget
+				}
+			}
+			random_list = {
+				60 = {
+					country_event = { id = spy.41 days = 7 }	# Mission successful (ROOT)
+				}
+				40 = {
+					country_event = { id = spy.42 days = 7 }	# Our spy dies (ROOT)
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:espionage_target = {
+					check_variable = { spy_budget = 5 }	# Target has Very High Intelligence Budget
+				}
+			}
+			random_list = {
+				50 = {
+					country_event = { id = spy.41 days = 7 }	# Mission successful (ROOT)
+				}
+				50 = {
+					country_event = { id = spy.42 days = 7 }	# Our spy dies (ROOT)
+				}
+			}
+		}
+		# set_country_flag = kill_spy_mission
+	}
+}
+
+# Kill Spy Successful
+country_event = {
+	id = spy.41
+	title = spy.41.t
+	desc = spy.41.d
+	picture = GFX_report_event_kill_spy
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.41.a
+		var:espionage_target = {
+			add_to_variable = { spy_max = 1 }
+			subtract_from_variable = { spies_abroad = 1 }
+			if = {
+				limit = { check_variable = { assigned_spies_on_target_slot_1@PREV > 0 } }
+				subtract_from_variable = { assigned_spies_on_target_slot_1@PREV = 1 }
+			}
+			else_if = {
+				limit = { check_variable = { assigned_spies_on_target_slot_2@PREV > 0 } }
+				subtract_from_variable = { assigned_spies_on_target_slot_2@PREV = 1 }
+			}
+			else_if = {
+				limit = { check_variable = { assigned_spies_on_target_slot_3@PREV > 0 } }
+				subtract_from_variable = { assigned_spies_on_target_slot_3@PREV = 1 }
+			}
+			else_if = {
+				limit = { check_variable = { assigned_spies_on_target_slot_4@PREV > 0 } }
+				subtract_from_variable = { assigned_spies_on_target_slot_4@PREV = 1 }
+			}
+			ROOT = { subtract_from_variable = { infiltrated_spies_from_@PREV = 1 } }
+			if = {
+				limit = {
+					ROOT = {
+						check_variable = { infiltrated_spies_from_@PREV < 1 }
+					}
+					is_in_array = {
+						array = ROOT.spy_enemies
+						value = THIS
+					}
+				}
+				remove_from_array = { ROOT.spy_enemies = THIS }
+			}
+		}
+		clr_country_flag = ongoing_mission
+		subtract_from_variable = { enemy_spies = 1 }
+		subtract_from_variable = { infiltrated_spies_from_ = 1 }
+		if = {
+			limit = {
+				check_variable = { enemy_spies < 1 }
+			}
+			set_variable = { show_spy_enemies_list = 0 }
+		}
+		
+	}
+}
+
+# Our spy dies |in kill spy mission| (ROOT)
+country_event = {
+	id = spy.42
+	title = spy.8.t
+	desc = spy.8.d_2
+	picture = GFX_report_event_dead_spy	# GFX_report_event_dead_spy
+
+	is_triggered_only = yes
+
+	option = {
+		name = spy.8.a
+		add_to_variable = { spy_max = 1 }
+		subtract_from_variable = { spies_abroad = 1 }
+		hidden_effect = {
+			var:espionage_target = {
+				country_event = { id = spy.10 }
+				set_country_flag = kill_spy_mission
+			}
+		}
+		subtract_from_variable = { assigned_spies_on_target_slot_5 = 1 }
+		clr_country_flag = ongoing_mission
+		# clr_country_flag = kill_spy_mission
+	}
+}

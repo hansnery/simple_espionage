@@ -1,0 +1,193 @@
+on_actions = {
+	
+	on_daily = {
+		effect = {
+			# Spy Rate and Max
+			set_temp_variable = { spy_rate_factor_1 = 0.004 } # Default: 0.004
+			multiply_temp_variable = { spy_rate_factor_1 = spy_budget }
+			set_variable = { spy_rate = spy_rate_factor_1 }
+			add_to_variable = { spy = spy_rate }
+			
+			set_variable = { days_for_next_spy = 1 }
+			divide_variable = { days_for_next_spy = spy_rate }
+			round_variable = days_for_next_spy
+			
+			clamp_variable = { var = spy_max min = 0 }
+			clamp_variable = { var = spy min = 0 max = spy_max }
+			
+			# Spy Network gain
+			every_country = {
+				limit = { 
+					ROOT = {
+						OR = {
+							has_country_flag = spied_country@PREV 
+							check_variable = { spy_network@PREV > 0 }
+						}
+					}
+				}
+				ROOT = {
+					if = {
+						limit = {
+							check_variable = { assigned_spies_on_target_slot_1@PREV > 0 }
+						}
+						set_variable = { slot_1_base_gain = 0.1 }
+						multiply_variable = { slot_1_base_gain = assigned_spies_on_target_slot_1@PREV }
+						add_to_variable = { spy_network@PREV = slot_1_base_gain }
+					}
+					
+					# Base Decay
+					set_variable = { spy_network_decay = 0.01 }
+					# multiply_temp_variable = { spy_network_decay = spy_budget@PREV }
+					subtract_from_variable = { spy_network@PREV = spy_network_decay }
+					
+					# Spy Network Base and Max
+					clamp_variable = { var = spy_network min = 0 max = 100 }
+					clamp_variable = { var = spy_network@PREV min = 0 max = 100 }
+				}
+			}
+			
+			# Update Spy Network Value
+			var:espionage_target = {
+				ROOT = {
+					set_variable = { spy_network = spy_network@PREV }
+				}
+			}
+			
+			# Opposition gain
+			every_country = {
+				limit = { 
+					ROOT = {
+						OR = {
+							has_country_flag = spied_country@PREV 
+							check_variable = { opposition@PREV > 0 }
+						}
+					}
+				}
+				ROOT = {
+					if = {
+						limit = {
+							check_variable = { assigned_spies_on_target_slot_2@PREV > 0 }
+						}
+						set_variable = { slot_2_base_gain = 0.1 }
+						multiply_variable = { slot_2_base_gain = assigned_spies_on_target_slot_2@PREV }
+						add_to_variable = { opposition@PREV = slot_2_base_gain }
+					}
+					
+					# Base Decay
+					set_variable = { opposition_decay = 0.04 }
+					# multiply_temp_variable = { opposition_decay = spy_budget@PREV }
+					subtract_from_variable = { opposition@PREV = opposition_decay }
+					
+					# Opposition Base and Max
+					clamp_variable = { var = opposition min = 0 max = 100 }
+					clamp_variable = { var = opposition@PREV min = 0 max = 100 }
+				}
+			}
+			
+			# Update Opposition Value
+			var:espionage_target = {
+				ROOT = {
+					set_variable = { opposition = opposition@PREV }
+				}
+			}
+			
+			# Propaganda gain
+			every_country = {
+				limit = { 
+					ROOT = {
+						OR = {
+							has_country_flag = spied_country@PREV 
+							check_variable = { propaganda@PREV > 0 }
+						}
+					}
+				}
+				ROOT = {
+					if = {
+						limit = {
+							check_variable = { assigned_spies_on_target_slot_3@PREV > 0 }
+						}
+						set_variable = { slot_3_base_gain = 0.1 }
+						multiply_variable = { slot_3_base_gain = assigned_spies_on_target_slot_3@PREV }
+						add_to_variable = { propaganda@PREV = slot_3_base_gain }
+					}	
+					
+					# Base Decay
+					set_variable = { propaganda_decay = 0.02 }
+					# multiply_temp_variable = { propaganda_decay = spy_budget@PREV }
+					subtract_from_variable = { propaganda@PREV = propaganda_decay }
+					
+					# Propaganda Base and Max
+					clamp_variable = { var = propaganda min = 0 max = 100 }
+					clamp_variable = { var = propaganda@PREV min = 0 max = 100 }
+				}
+			}
+			
+			# Update Propaganda Value
+			var:espionage_target = {
+				ROOT = {
+					set_variable = { propaganda = propaganda@PREV }
+				}
+			}
+			
+			# Intel gain
+			every_country = {
+				limit = { 
+					ROOT = {
+						OR = {
+							has_country_flag = spied_country@PREV 
+							check_variable = { intel@PREV > 0 }
+						}
+					}
+				}
+				ROOT = {
+					if = {
+						limit = {
+							check_variable = { assigned_spies_on_target_slot_4@PREV > 0 }
+						}
+						set_variable = { slot_4_base_gain = 0.1 }
+						multiply_variable = { slot_4_base_gain = assigned_spies_on_target_slot_4@PREV }
+						add_to_variable = { intel@PREV = slot_4_base_gain }
+					}
+					
+					# Base Decay
+					set_variable = { intel_decay = 0.06 }
+					# multiply_temp_variable = { intel_decay = spy_budget@PREV }
+					subtract_from_variable = { intel@PREV = intel_decay }
+					
+					# Intel Base and Max
+					clamp_variable = { var = intel min = 0 max = 100 }
+					clamp_variable = { var = intel@PREV min = 0 max = 100 }
+				}
+			}
+			
+			# Update Intel Value
+			var:espionage_target = {
+				ROOT = {
+					set_variable = { intel = intel@PREV }
+				}
+			}
+			
+			# Counterintelligence gain
+			if = {
+				limit = {
+					check_variable = { assigned_spies_on_target_slot_5 > 0 }
+				}
+				set_variable = { slot_5_base_gain = 0.1 }
+				multiply_variable = { slot_5_base_gain = assigned_spies_on_target_slot_5 }
+				add_to_variable = { counterintelligence = slot_5_base_gain }
+			}
+			
+			# Counterintelligence Base Decay
+			subtract_from_variable = { counterintelligence = 0.05 }
+			
+			# Counterintelligence Base and Max
+			clamp_variable = { var = counterintelligence min = 0 max = 100 }
+			
+			# Round variable
+			# round_variable = counterintelligence
+			
+			##########################################################################################################
+			##########################################################################################################
+		}
+    }
+}

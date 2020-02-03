@@ -1,0 +1,4 @@
+has_spy = {
+    check_variable = { ROOT.spy > 0.99 }
+	check_variable = { ROOT.spy_max > 0.99 }
+}

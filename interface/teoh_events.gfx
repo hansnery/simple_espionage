@@ -1,0 +1,64 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_report_event_spy_ready"
+		texturefile = "gfx/event_pictures/report_event_spy_ready.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_captured_spy"
+		texturefile = "gfx/event_pictures/report_event_captured_spy.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_sabotage_research"
+		texturefile = "gfx/event_pictures/report_event_sabotage_research.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_steal_technology"
+		texturefile = "gfx/event_pictures/report_event_steal_technology.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_sabotage_industry"
+		texturefile = "gfx/event_pictures/report_event_sabotage_industry.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_tarnish_reputation"
+		texturefile = "gfx/event_pictures/report_event_tarnish_reputation.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_protest_2"
+		texturefile = "gfx/event_pictures/report_event_protest_2.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_protest"
+		texturefile = "gfx/event_pictures/report_event_protest.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_pacifists_2"
+		texturefile = "gfx/event_pictures/report_event_pacifists_2.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_pacifists"
+		texturefile = "gfx/event_pictures/report_event_pacifists.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_arm_rebels_1"
+		texturefile = "gfx/event_pictures/report_event_arm_rebels_1.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_kill_spy"
+		texturefile = "gfx/event_pictures/report_event_kill_spy.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_dead_spy"
+		texturefile = "gfx/event_pictures/report_event_dead_spy.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_military_sabotage"
+		texturefile = "gfx/event_pictures/report_event_military_sabotage.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_spread_dissent"
+		texturefile = "gfx/event_pictures/report_event_spread_dissent.dds"
+	}
+}
+	
+	

@@ -1,0 +1,11 @@
+﻿l_english:
+ research_sabotaged:0 "Research Sabotaged"
+ research_sabotaged_desc:0 "This country's research facilities and personnel have been attacked by foreign agents."
+ rebels_funded:0 "Rebels Funded"
+ rebels_funded_desc:0 "Rebels have been funded by foreign agents."
+ spread_dissent:0 "Dissent Spread"
+ spread_dissent_desc:0 "Dissent has been spread by foreign agents."
+ fund_opposition:0 "Opposition Funded"
+ fund_opposition_desc:0 "The opposition has been funded by foreign agents."
+ kgb_idea:0 "The KGB"
+ kgb_idea_desc:0 "Our primacy in espionage is well known. Now with the NKVD reorganized as the KGB, there will be no secrets unknown to us.\n\n§WMaximum agents:§! §G+10§! £spy_icon "

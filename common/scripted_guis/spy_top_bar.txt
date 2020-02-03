@@ -1,0 +1,32 @@
+scripted_gui = {
+
+	spy = {
+		context_type = player_context
+		
+		parent_window_token = top_bar
+		
+		window_name = "spy_container"
+		
+		visible = {
+            always = yes
+		}
+		
+		effects = {
+			spy_bg_click = {
+				set_temp_variable = { show = 1 }
+				subtract_from_temp_variable = { show = show_spy_missions }
+				set_variable = { show_spy_missions = show }
+				set_variable = { espionage_target = PREV.id }
+				# Updates Operations Buttons' Values / Using 'mirror' variables
+				set_variable = { assigned_spies_on_target_slot_1 = assigned_spies_on_target_slot_1@PREV }
+				set_variable = { assigned_spies_on_target_slot_2 = assigned_spies_on_target_slot_2@PREV }
+				set_variable = { assigned_spies_on_target_slot_3 = assigned_spies_on_target_slot_3@PREV }
+				set_variable = { assigned_spies_on_target_slot_4 = assigned_spies_on_target_slot_4@PREV }
+				set_variable = { infiltrated_spies_from_ = infiltrated_spies_from_@PREV }
+				set_country_flag = spied_country@PREV
+			}
+		}
+	}
+    
+}
+
