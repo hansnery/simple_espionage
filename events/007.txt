@@ -1595,7 +1595,10 @@ country_event = {
 		name = spy.22.a
 		# loses_1_prestige = yes
 		# damages_reputation = yes
-		
+		add_named_threat = { 
+			threat = 5 
+			name = TARNISHED_REPUTATION
+		}
 	}
 }
 
