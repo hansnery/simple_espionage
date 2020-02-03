@@ -2,6 +2,7 @@ on_actions = {
 	on_startup = {
 		effect = {
 			every_country = {
+				set_variable = { spy = 10 }
 				set_variable = { spy_budget = 1 }
 				set_variable = { spy_max = 10 }
 			}
