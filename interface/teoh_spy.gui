@@ -3,7 +3,7 @@ guiTypes = {
 	# Number of Spies on the Topbar
 	containerWindowType = {
 		name = "spy_container"
-		position = { x = 1088 y = 6 }
+		position = { x = 900 y = 6 }
 		
 		iconType ={
 			name ="spy_bg"
